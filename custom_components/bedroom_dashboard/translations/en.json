@@ -2,6 +2,12 @@
   "config": {
     "abort": {
       "single_instance_allowed": "Bedroom Dashboard is already configured."
+    },
+    "step": {
+      "user": {
+        "description": "Add the Bedroom Dashboard panel to the Home Assistant sidebar.",
+        "title": "Bedroom Dashboard"
+      }
     }
   }
 }

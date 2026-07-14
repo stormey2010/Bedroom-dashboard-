@@ -1,7 +1,7 @@
 {
   "codeowners": ["@stormey2010"],
   "config_flow": true,
-  "dependencies": ["frontend", "panel_custom"],
+  "dependencies": ["frontend", "http", "panel_custom"],
   "documentation": "https://github.com/stormey2010/Bedroom-dashboard-",
   "domain": "bedroom_dashboard",
   "integration_type": "helper",
