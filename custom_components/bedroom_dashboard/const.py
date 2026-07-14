@@ -2,7 +2,7 @@
 
 DOMAIN = "bedroom_dashboard"
 NAME = "Bedroom Dashboard"
-VERSION = "1.0.1"
+VERSION = "1.0.2"
 
 PANEL_ELEMENT = "bedroom-dashboard"
 PANEL_TITLE = "Bedroom"

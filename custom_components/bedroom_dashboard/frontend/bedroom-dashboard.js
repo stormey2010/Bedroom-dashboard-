@@ -32,7 +32,7 @@ function initializeDashboard(root) {
       const SECURITY = [
         { id: "binary_sensor.left_window", name: "Left Window", icon: "panel-left-open", kind: "opening" },
         { id: "binary_sensor.right_window", name: "Right Window", icon: "panel-right-open", kind: "opening" },
-        { id: "binary_sensor.motion_dector", name: "Motion Detector", icon: "person-standing", kind: "motion" },
+        { id: "binary_sensor.motion_sensor_occupancy", name: "Motion Detector", icon: "person-standing", kind: "motion" },
         { id: "binary_sensor.aqara_motion_sensor_p1_occupancy", name: "Aqara Motion", icon: "scan", kind: "motion" },
       ];
       const PLUGS = [
@@ -415,8 +415,7 @@ function initializeDashboard(root) {
       function renderHeaderStats() {
         const temp = get("sensor.room_temperature_sensor");
         const hum = get("sensor.room_humidity_sensor_humidity");
-        const presence = get("binary_sensor.aqara_presence_multisensor_fp300_occupancy")
-          || get("binary_sensor.whole_room_sensor");
+        const presence = get("binary_sensor.bedroom_presence_sensor_occupancy");
 
         updateStat("statTemp", unavailable(temp) ? "—" : `${Math.round(parseFloat(temp.state))}°`);
         updateStat("statHum", unavailable(hum) ? "—" : `${Math.round(parseFloat(hum.state))}%`);
@@ -763,7 +762,7 @@ function initializeDashboard(root) {
 
         const visual = el("div", "wally-visual");
         const img = document.createElement("img");
-        img.src = "/bedroom_dashboard_static/assets/wally-vacuum.png?v=1.0.1";
+        img.src = "/bedroom_dashboard_static/assets/wally-vacuum.png?v=1.0.2";
         img.alt = "Wally robot vacuum";
         visual.appendChild(img);
         visual.appendChild(el("div", "wally-rail-title", [txt("Wally")]));
@@ -1017,9 +1016,9 @@ function initializeDashboard(root) {
       updateClock();
       const ALL_ENTITIES = new Set([
         ...LIGHTS.map((item) => item.id), ...FAN_LIGHTS.map((item) => item.id), ...Object.keys(GROUP_MEMBERS), ...Object.values(GROUP_MEMBERS).flat(), FAN.id, ...SECURITY.map((item) => item.id), ...PLUGS.map((item) => item.id), ...MEDIA.map((item) => item.id), ...MODES.map((item) => item.id),
-        "cover.left_curtain", "cover.right_curtain", "vacuum.wally", "sensor.room_temperature_sensor", "sensor.room_humidity_sensor_humidity", "binary_sensor.aqara_presence_multisensor_fp300_occupancy", "binary_sensor.whole_room_sensor", "sensor.wally_status", "sensor.wally_battery", "binary_sensor.wally_cleaning", "binary_sensor.wally_charging", "sensor.wally_vacuum_error", "sensor.wally_current_room", "sensor.wally_cleaning_area", "sensor.wally_cleaning_time", "binary_sensor.wally_water_box_attached", "binary_sensor.wally_mop_attached", "binary_sensor.wally_water_shortage", "sensor.wally_last_clean_end", "select.wally_mop_intensity", "select.wally_mop_mode", "select.wally_selected_map", "number.wally_volume", "switch.wally_do_not_disturb", "time.wally_do_not_disturb_begin", "time.wally_do_not_disturb_end", "sensor.wally_main_brush_time_left", "sensor.wally_side_brush_time_left", "sensor.wally_filter_time_left", "sensor.wally_sensor_time_left"
+        "cover.left_curtain", "cover.right_curtain", "vacuum.wally", "sensor.room_temperature_sensor", "sensor.room_humidity_sensor_humidity", "binary_sensor.bedroom_presence_sensor_occupancy", "sensor.wally_status", "sensor.wally_battery", "binary_sensor.wally_cleaning", "binary_sensor.wally_charging", "sensor.wally_vacuum_error", "sensor.wally_current_room", "sensor.wally_cleaning_area", "sensor.wally_cleaning_time", "binary_sensor.wally_water_box_attached", "binary_sensor.wally_mop_attached", "binary_sensor.wally_water_shortage", "sensor.wally_last_clean_end", "select.wally_mop_intensity", "select.wally_mop_mode", "select.wally_selected_map", "number.wally_volume", "switch.wally_do_not_disturb", "time.wally_do_not_disturb_begin", "time.wally_do_not_disturb_end", "sensor.wally_main_brush_time_left", "sensor.wally_side_brush_time_left", "sensor.wally_filter_time_left", "sensor.wally_sensor_time_left"
       ]);
-      const HEADER_ENTITIES = new Set(["sensor.room_temperature_sensor", "sensor.room_humidity_sensor_humidity", "binary_sensor.aqara_presence_multisensor_fp300_occupancy", "binary_sensor.whole_room_sensor"]);
+      const HEADER_ENTITIES = new Set(["sensor.room_temperature_sensor", "sensor.room_humidity_sensor_humidity", "binary_sensor.bedroom_presence_sensor_occupancy"]);
       const WALLY_ENTITIES = new Set([...ALL_ENTITIES].filter((id) => id.includes("wally")));
       function clearOptimistic(id) { delete optimistic[id]; const timer = optimisticTimers.get(id); if (timer) clearTimeout(timer); optimisticTimers.delete(id); }
       function renderForEntities(ids) {
@@ -1077,7 +1076,7 @@ class BedroomDashboard extends HTMLElement {
   constructor() { super(); this.attachShadow({ mode: "open" }); this._controller = null; this._hass = null; }
   connectedCallback() {
     if (this._controller) { this._controller.resume(); return; }
-    this.shadowRoot.innerHTML = '<style>@import url("/bedroom_dashboard_static/bedroom-dashboard.css?v=1.0.1");</style>' + MARKUP;
+    this.shadowRoot.innerHTML = '<style>@import url("/bedroom_dashboard_static/bedroom-dashboard.css?v=1.0.2");</style>' + MARKUP;
     this._controller = initializeDashboard(this.shadowRoot);
     this._ensureLucide();
     if (this._hass) this._controller.setHass(this._hass);
@@ -1087,7 +1086,7 @@ class BedroomDashboard extends HTMLElement {
     let script = document.querySelector('script[data-bedroom-dashboard-lucide]');
     if (!script) {
       script = document.createElement('script');
-      script.src = '/bedroom_dashboard_static/vendor/lucide.min.js?v=1.0.1';
+      script.src = '/bedroom_dashboard_static/vendor/lucide.min.js?v=1.0.2';
       script.dataset.bedroomDashboardLucide = 'true';
       document.head.appendChild(script);
     }
