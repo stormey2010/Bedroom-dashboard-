@@ -1,0 +1,7 @@
+{
+  "config": {
+    "abort": {
+      "single_instance_allowed": "Bedroom Dashboard is already configured."
+    }
+  }
+}
