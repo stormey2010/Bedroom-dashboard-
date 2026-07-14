@@ -84,8 +84,18 @@ function initializeDashboard(root) {
         if (size) i.style.fontSize = size + "px";
         return i;
       }
-      function mountIcons(root) {
-        if (window.lucide?.createIcons) lucide.createIcons({ attrs: { "stroke-width": 2 }, root: root || root });
+      function mountIcons(container = root) {
+        if (!window.lucide?.createElement || !window.lucide?.icons || !container) return;
+        container.querySelectorAll("[data-lucide]").forEach((placeholder) => {
+          if (placeholder.tagName.toLowerCase() === "svg") return;
+          const name = placeholder.getAttribute("data-lucide");
+          const exportName = name.split("-").map((part) => part.charAt(0).toUpperCase() + part.slice(1)).join("");
+          const iconNode = window.lucide.icons[exportName];
+          if (!iconNode) return;
+          const svg = window.lucide.createElement(iconNode, { "stroke-width": 2 });
+          for (const attr of placeholder.attributes) svg.setAttribute(attr.name, attr.value);
+          placeholder.replaceWith(svg);
+        });
       }
       function el(tag, cls, kids) {
         const n = document.createElement(tag);
@@ -753,7 +763,7 @@ function initializeDashboard(root) {
 
         const visual = el("div", "wally-visual");
         const img = document.createElement("img");
-        img.src = "/bedroom_dashboard_static/assets/wally-vacuum.png?v=1.0.0";
+        img.src = "/bedroom_dashboard_static/assets/wally-vacuum.png?v=1.0.1";
         img.alt = "Wally robot vacuum";
         visual.appendChild(img);
         visual.appendChild(el("div", "wally-rail-title", [txt("Wally")]));
@@ -1016,7 +1026,7 @@ function initializeDashboard(root) {
         const changed = new Set(ids);
         if ([...changed].some((id) => HEADER_ENTITIES.has(id))) renderHeaderStats();
         if ([...changed].some((id) => LIGHTS.some((x) => x.id === id) || FAN_LIGHTS.some((x) => x.id === id) || Object.values(GROUP_MEMBERS).flat().includes(id))) { renderLights(); renderHero(); }
-        if (changed.has(FAN.id)) renderFan();
+        if (changed.has(FAN.id)) { renderFan(); renderHero(); }
         if ([...changed].some((id) => SECURITY.some((x) => x.id === id))) renderWindows();
         if ([...changed].some((id) => PLUGS.some((x) => x.id === id))) renderPlugs();
         if ([...changed].some((id) => MEDIA.some((x) => x.id === id))) renderMedia();
@@ -1067,7 +1077,7 @@ class BedroomDashboard extends HTMLElement {
   constructor() { super(); this.attachShadow({ mode: "open" }); this._controller = null; this._hass = null; }
   connectedCallback() {
     if (this._controller) { this._controller.resume(); return; }
-    this.shadowRoot.innerHTML = '<style>@import url("/bedroom_dashboard_static/bedroom-dashboard.css?v=1.0.0");</style>' + MARKUP;
+    this.shadowRoot.innerHTML = '<style>@import url("/bedroom_dashboard_static/bedroom-dashboard.css?v=1.0.1");</style>' + MARKUP;
     this._controller = initializeDashboard(this.shadowRoot);
     this._ensureLucide();
     if (this._hass) this._controller.setHass(this._hass);
@@ -1077,7 +1087,7 @@ class BedroomDashboard extends HTMLElement {
     let script = document.querySelector('script[data-bedroom-dashboard-lucide]');
     if (!script) {
       script = document.createElement('script');
-      script.src = 'https://unpkg.com/lucide@0.525.0/dist/umd/lucide.min.js';
+      script.src = '/bedroom_dashboard_static/vendor/lucide.min.js?v=1.0.1';
       script.dataset.bedroomDashboardLucide = 'true';
       document.head.appendChild(script);
     }
