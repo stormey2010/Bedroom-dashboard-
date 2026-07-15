@@ -169,10 +169,18 @@
 
     .clock {
       color: var(--muted);
+      cursor: pointer;
       font-size: 0.8rem;
       font-variant-numeric: tabular-nums;
       font-weight: 550;
       padding: 0 2px;
+      transition: color .18s var(--ease);
+    }
+
+    .clock:hover,
+    .clock:focus-visible {
+      color: var(--text);
+      outline: none;
     }
 
     /* ===== HERO ===== */
