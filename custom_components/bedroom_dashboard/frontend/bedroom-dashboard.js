@@ -1,4 +1,4 @@
-const MARKUP = "\n  <div class=\"app\">\n    <header class=\"top\">\n      <div class=\"brand\">\n        <h1>Hello, Parker</h1>\n        <p class=\"sub\" id=\"greeting\">Welcome back</p>\n      </div>\n      <div class=\"top-right\">\n        <div class=\"stat temp\" id=\"statTemp\"><i data-lucide=\"thermometer\"></i><span>\u00e2\u20ac\u201d</span></div>\n        <div class=\"stat hum\" id=\"statHum\"><i data-lucide=\"droplets\"></i><span>\u00e2\u20ac\u201d</span></div>\n        <div class=\"stat\" id=\"statPresence\"><span class=\"presence-dot\" id=\"presenceDot\"></span><span>\u00e2\u20ac\u201d</span></div>\n        <div class=\"clock\" id=\"clock\">\u00e2\u20ac\u201d</div>\n      </div>\n    </header>\n\n    <section class=\"hero\" id=\"hero\"></section>\n\n    <div class=\"dashboard\">\n      <section class=\"panel d1 bento-lights\">\n        <div class=\"panel-head\">\n          <h2>Lights</h2>\n        </div>\n        <div class=\"light-grid\" id=\"lights\"></div>\n      </section>\n\n      <section class=\"panel d2 bento-modes\">\n        <div class=\"panel-head\">\n          <h2>Modes</h2>\n        </div>\n        <div class=\"modes\" id=\"modes\"></div>\n      </section>\n\n      <section class=\"panel d3 bento-fan\">\n        <div class=\"panel-head\">\n          <h2>Fan</h2>\n        </div>\n        <div id=\"fan\"></div>\n      </section>\n\n      <section class=\"panel d3 bento-plugs\">\n        <div class=\"panel-head\">\n          <h2>Plugs</h2>\n        </div>\n        <div class=\"plug-grid\" id=\"plugs\"></div>\n      </section>\n\n      <section class=\"wally bento-wally\" id=\"wally\"></section>\n\n      <section class=\"panel d4 bento-windows\">\n        <div class=\"panel-head\">\n          <h2>Security</h2>\n        </div>\n        <div class=\"win-grid\" id=\"windows\"></div>\n      </section>\n\n      <section class=\"panel d5 bento-media\">\n        <div class=\"panel-head\">\n          <h2>Media</h2>\n        </div>\n        <div class=\"media-grid\" id=\"mediaDevices\"></div>\n        <div class=\"announcement\">\n          <input id=\"announcementText\" type=\"text\" maxlength=\"240\" placeholder=\"Announcement message\">\n          <button type=\"button\" id=\"announceDot\"><i data-lucide=\"message-square\"></i> Echo Dot</button>\n          <button type=\"button\" id=\"announceShow\"><i data-lucide=\"message-square\"></i> Echo Show</button>\n        </div>\n      </section>\n\n      <section class=\"panel d5 bento-pc\">\n        <div class=\"panel-head\">\n          <h2>PC</h2>\n        </div>\n        <div class=\"pc-card\" id=\"pcCard\"></div>\n      </section>\n    </div>\n  </div>\n\n  <div class=\"modal-backdrop\" id=\"modalBackdrop\">\n    <div class=\"modal\" id=\"modal\"></div>\n  </div>\n\n  <div class=\"toasts\" id=\"toasts\"></div>\n  <div class=\"confirm-backdrop\" id=\"confirm\">\n    <div class=\"confirm\">\n      <h3 id=\"confirmTitle\">Confirm</h3>\n      <p id=\"confirmBody\"></p>\n      <div class=\"confirm-actions\">\n        <button type=\"button\" id=\"confirmCancel\">Cancel</button>\n        <button type=\"button\" class=\"go\" id=\"confirmGo\">Confirm</button>\n      </div>\n    </div>\n  </div>";
+const MARKUP = "\n  <div class=\"app\">\n    <header class=\"top\">\n      <div class=\"brand\">\n        <h1>Hello, Parker</h1>\n        <p class=\"sub\" id=\"greeting\">Welcome back</p>\n      </div>\n      <div class=\"top-right\">\n        <div class=\"stat temp\" id=\"statTemp\"><i data-lucide=\"thermometer\"></i><span>\u00e2\u20ac\u201d</span></div>\n        <div class=\"stat hum\" id=\"statHum\"><i data-lucide=\"droplets\"></i><span>\u00e2\u20ac\u201d</span></div>\n        <div class=\"stat\" id=\"statPresence\"><span class=\"presence-dot\" id=\"presenceDot\"></span><span>\u00e2\u20ac\u201d</span></div>\n        <div class=\"clock\" id=\"clock\">\u00e2\u20ac\u201d</div>\n      </div>\n    </header>\n\n    <section class=\"hero\" id=\"hero\"></section>\n\n    <div class=\"dashboard\">\n      <section class=\"panel d1 bento-lights\">\n        <div class=\"panel-head\">\n          <h2>Lights</h2>\n        </div>\n        <div class=\"light-grid\" id=\"lights\"></div>\n      </section>\n\n      <section class=\"panel d2 bento-modes\">\n        <div class=\"panel-head\">\n          <h2>Modes</h2>\n        </div>\n        <div class=\"modes\" id=\"modes\"></div>\n      </section>\n\n      <section class=\"panel d3 bento-fan\">\n        <div class=\"panel-head\">\n          <h2>Fan</h2>\n        </div>\n        <div id=\"fan\"></div>\n      </section>\n\n      <section class=\"panel d3 bento-plugs\">\n        <div class=\"panel-head\">\n          <h2>Plugs</h2>\n        </div>\n        <div class=\"plug-grid\" id=\"plugs\"></div>\n      </section>\n\n      <section class=\"wally bento-wally\" id=\"wally\"></section>\n\n      <section class=\"panel d4 bento-windows\">\n        <div class=\"panel-head\">\n          <h2>Security</h2>\n        </div>\n        <div class=\"win-grid\" id=\"windows\"></div>\n      </section>\n\n      <section class=\"panel d5 bento-media\">\n        <div class=\"panel-head\">\n          <h2>Media</h2>\n        </div>\n        <div class=\"media-grid\" id=\"mediaDevices\"></div>\n        <div class=\"announcement\">\n          <input id=\"announcementText\" type=\"text\" maxlength=\"240\" placeholder=\"Announcement message\">\n          <button type=\"button\" id=\"announceDot\"><i data-lucide=\"message-square\"></i> Echo Dot</button>\n        </div>\n      </section>\n\n      <section class=\"panel d5 bento-pc\">\n        <div class=\"panel-head\">\n          <h2>PC</h2>\n        </div>\n        <div class=\"pc-card\" id=\"pcCard\"></div>\n      </section>\n    </div>\n  </div>\n\n  <div class=\"modal-backdrop\" id=\"modalBackdrop\">\n    <div class=\"modal\" id=\"modal\"></div>\n  </div>\n\n  <div class=\"toasts\" id=\"toasts\"></div>\n  <div class=\"confirm-backdrop\" id=\"confirm\">\n    <div class=\"confirm\">\n      <h3 id=\"confirmTitle\">Confirm</h3>\n      <p id=\"confirmBody\"></p>\n      <div class=\"confirm-actions\">\n        <button type=\"button\" id=\"confirmCancel\">Cancel</button>\n        <button type=\"button\" class=\"go\" id=\"confirmGo\">Confirm</button>\n      </div>\n    </div>\n  </div>";
 
 function initializeDashboard(root) {
       "use strict";
@@ -44,7 +44,6 @@ function initializeDashboard(root) {
       ];
       const MEDIA = [
         { id: "media_player.parker_s_echo_dot", name: "Parker's Echo Dot", icon: "speaker" },
-        { id: "media_player.parker_s_echo_show", name: "Parker's Echo Show", icon: "monitor-speaker" },
       ];
       const MODES = [
         { id: "input_boolean.automations", name: "Automations", icon: "zap" },
@@ -771,7 +770,7 @@ function initializeDashboard(root) {
 
         const visual = el("div", "wally-visual");
         const img = document.createElement("img");
-        img.src = "/bedroom_dashboard_static/assets/wally-vacuum.png?v=1.0.4";
+        img.src = "/bedroom_dashboard_static/assets/wally-vacuum.png?v=1.0.5";
         img.alt = "Wally robot vacuum";
         visual.appendChild(img);
         visual.appendChild(el("div", "wally-rail-title", [txt("Wally")]));
@@ -1017,7 +1016,6 @@ function initializeDashboard(root) {
       }
 
       root.getElementById("announceDot").onclick = () => announceOn("media_player.parker_s_echo_dot");
-      root.getElementById("announceShow").onclick = () => announceOn("media_player.parker_s_echo_show");
       root.getElementById("announcementText").onkeydown = (event) => {
         if (event.key === "Enter") announceOn("media_player.parker_s_echo_dot");
       };
@@ -1100,7 +1098,7 @@ class BedroomDashboard extends HTMLElement {
   constructor() { super(); this.attachShadow({ mode: "open" }); this._controller = null; this._hass = null; }
   connectedCallback() {
     if (this._controller) { this._controller.resume(); return; }
-    this.shadowRoot.innerHTML = '<style>@import url("/bedroom_dashboard_static/bedroom-dashboard.css?v=1.0.4");</style>' + MARKUP;
+    this.shadowRoot.innerHTML = '<style>@import url("/bedroom_dashboard_static/bedroom-dashboard.css?v=1.0.5");</style>' + MARKUP;
     this._controller = initializeDashboard(this.shadowRoot);
     this._ensureLucide();
     if (this._hass) this._controller.setHass(this._hass);
@@ -1110,7 +1108,7 @@ class BedroomDashboard extends HTMLElement {
     let script = document.querySelector('script[data-bedroom-dashboard-lucide]');
     if (!script) {
       script = document.createElement('script');
-      script.src = '/bedroom_dashboard_static/vendor/lucide.min.js?v=1.0.4';
+      script.src = '/bedroom_dashboard_static/vendor/lucide.min.js?v=1.0.5';
       script.dataset.bedroomDashboardLucide = 'true';
       document.head.appendChild(script);
     }
