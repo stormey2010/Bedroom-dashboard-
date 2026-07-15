@@ -762,7 +762,7 @@ function initializeDashboard(root) {
 
         const visual = el("div", "wally-visual");
         const img = document.createElement("img");
-        img.src = "/bedroom_dashboard_static/assets/wally-vacuum.png?v=1.0.2";
+        img.src = "/bedroom_dashboard_static/assets/wally-vacuum.png?v=1.0.3";
         img.alt = "Wally robot vacuum";
         visual.appendChild(img);
         visual.appendChild(el("div", "wally-rail-title", [txt("Wally")]));
@@ -1012,6 +1012,21 @@ function initializeDashboard(root) {
       root.getElementById("announcementText").onkeydown = (event) => {
         if (event.key === "Enter") announceOn("media_player.parker_s_echo_dot");
       };
+      const clock = root.getElementById("clock");
+      const confirmSidebarToggle = () => askConfirm(
+        "Toggle sidebar?",
+        "Are you sure you want to enable or disable the sidebar?",
+        () => window.location.assign("/local/toggle-sidebar.html?return=/bedroom"),
+      );
+      clock.setAttribute("role", "button");
+      clock.setAttribute("tabindex", "0");
+      clock.setAttribute("aria-label", "Enable or disable sidebar");
+      clock.onclick = confirmSidebarToggle;
+      clock.onkeydown = (event) => {
+        if (event.key !== "Enter" && event.key !== " ") return;
+        event.preventDefault();
+        confirmSidebarToggle();
+      };
       let clockTimer = setInterval(updateClock, 15000);
       updateClock();
       const ALL_ENTITIES = new Set([
@@ -1076,7 +1091,7 @@ class BedroomDashboard extends HTMLElement {
   constructor() { super(); this.attachShadow({ mode: "open" }); this._controller = null; this._hass = null; }
   connectedCallback() {
     if (this._controller) { this._controller.resume(); return; }
-    this.shadowRoot.innerHTML = '<style>@import url("/bedroom_dashboard_static/bedroom-dashboard.css?v=1.0.2");</style>' + MARKUP;
+    this.shadowRoot.innerHTML = '<style>@import url("/bedroom_dashboard_static/bedroom-dashboard.css?v=1.0.3");</style>' + MARKUP;
     this._controller = initializeDashboard(this.shadowRoot);
     this._ensureLucide();
     if (this._hass) this._controller.setHass(this._hass);
@@ -1086,7 +1101,7 @@ class BedroomDashboard extends HTMLElement {
     let script = document.querySelector('script[data-bedroom-dashboard-lucide]');
     if (!script) {
       script = document.createElement('script');
-      script.src = '/bedroom_dashboard_static/vendor/lucide.min.js?v=1.0.2';
+      script.src = '/bedroom_dashboard_static/vendor/lucide.min.js?v=1.0.3';
       script.dataset.bedroomDashboardLucide = 'true';
       document.head.appendChild(script);
     }
