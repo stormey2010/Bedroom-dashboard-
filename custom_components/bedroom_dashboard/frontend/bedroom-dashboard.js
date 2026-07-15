@@ -20,10 +20,10 @@ function initializeDashboard(root) {
       const FAN = {
         id: "fan.fan",
         speeds: [
-          { label: "Off", pct: 0 },
-          { label: "Low", pct: 33 },
-          { label: "Med", pct: 67 },
-          { label: "High", pct: 100 },
+          { label: "Off", level: 0 },
+          { label: "Low", level: 1 },
+          { label: "Med", level: 2 },
+          { label: "High", level: 3 },
         ],
       };
       const SWATCHES = [
@@ -283,14 +283,22 @@ function initializeDashboard(root) {
         applyOptimistic(affected, "on", { rgb_color: rgb });
         await callService("light", "turn_on", { entity_id: id, rgb_color: rgb }, affected);
       }
-      async function setFan(pct) {
-        if (pct <= 0) {
+      function fanPercentage(level) {
+        if (level <= 0) return 0;
+        const step = Number(get(FAN.id)?.attributes?.percentage_step);
+        const exactStep = Number.isFinite(step) && step > 0 ? step : 100 / 3;
+        return Math.min(100, exactStep * level);
+      }
+      async function setFan(level) {
+        const pct = fanPercentage(level);
+        if (level <= 0) {
           applyOptimistic([FAN.id], "off", { percentage: 0 });
           await callService("fan", "turn_off", { entity_id: FAN.id }, [FAN.id]);
           return;
         }
+        const wasOn = on(get(FAN.id));
         applyOptimistic([FAN.id], "on", { percentage: pct });
-        await callService("fan", "set_percentage", { entity_id: FAN.id, percentage: pct }, [FAN.id]);
+        await callService("fan", wasOn ? "set_percentage" : "turn_on", { entity_id: FAN.id, percentage: pct }, [FAN.id]);
       }
       async function curtains(open) {
         const left = get("cover.left_curtain");
@@ -588,9 +596,10 @@ function initializeDashboard(root) {
         if (!un) {
           const speeds = el("div", "speeds");
           FAN.speeds.forEach((s) => {
-            const active = isOn ? Math.abs(pct - s.pct) <= 16 : s.pct === 0;
+            const targetPct = fanPercentage(s.level);
+            const active = isOn ? s.level > 0 && Math.abs(pct - targetPct) <= 1 : s.level === 0;
             const btn = el("div", `speed${active ? " active" : ""}`, [txt(s.label)]);
-            btn.onclick = (ev) => { ev.stopPropagation(); setFan(s.pct); };
+            btn.onclick = (ev) => { ev.stopPropagation(); setFan(s.level); };
             speeds.appendChild(btn);
           });
           body.appendChild(speeds);
@@ -762,7 +771,7 @@ function initializeDashboard(root) {
 
         const visual = el("div", "wally-visual");
         const img = document.createElement("img");
-        img.src = "/bedroom_dashboard_static/assets/wally-vacuum.png?v=1.0.3";
+        img.src = "/bedroom_dashboard_static/assets/wally-vacuum.png?v=1.0.4";
         img.alt = "Wally robot vacuum";
         visual.appendChild(img);
         visual.appendChild(el("div", "wally-rail-title", [txt("Wally")]));
@@ -1091,7 +1100,7 @@ class BedroomDashboard extends HTMLElement {
   constructor() { super(); this.attachShadow({ mode: "open" }); this._controller = null; this._hass = null; }
   connectedCallback() {
     if (this._controller) { this._controller.resume(); return; }
-    this.shadowRoot.innerHTML = '<style>@import url("/bedroom_dashboard_static/bedroom-dashboard.css?v=1.0.3");</style>' + MARKUP;
+    this.shadowRoot.innerHTML = '<style>@import url("/bedroom_dashboard_static/bedroom-dashboard.css?v=1.0.4");</style>' + MARKUP;
     this._controller = initializeDashboard(this.shadowRoot);
     this._ensureLucide();
     if (this._hass) this._controller.setHass(this._hass);
@@ -1101,7 +1110,7 @@ class BedroomDashboard extends HTMLElement {
     let script = document.querySelector('script[data-bedroom-dashboard-lucide]');
     if (!script) {
       script = document.createElement('script');
-      script.src = '/bedroom_dashboard_static/vendor/lucide.min.js?v=1.0.3';
+      script.src = '/bedroom_dashboard_static/vendor/lucide.min.js?v=1.0.4';
       script.dataset.bedroomDashboardLucide = 'true';
       document.head.appendChild(script);
     }
