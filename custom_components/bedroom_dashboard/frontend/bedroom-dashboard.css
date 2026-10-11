@@ -376,7 +376,11 @@
     }
 
     .bento-plugs {
-      grid-column: span 12;
+      grid-column: span 6;
+    }
+
+    .bento-computer {
+      grid-column: span 6;
     }
 
     .bento-wally {
@@ -404,6 +408,11 @@
 
     .bento-pc .btn-row {
       flex-direction: column;
+    }
+
+    .bento-computer .pc-card {
+      justify-content: space-between;
+      height: calc(100% - 23px);
     }
 
     .bento-modes {
@@ -860,6 +869,10 @@
       display: grid;
       grid-template-columns: repeat(5, minmax(0, 1fr));
       gap: 9px;
+    }
+
+    .bento-plugs .plug-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 
     .plug {
@@ -1408,7 +1421,7 @@
 
     .wally-controls {
       display: grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 7px;
       padding: 7px;
       border: 1px solid var(--line);
@@ -1963,6 +1976,7 @@
       .bento-modes,
       .bento-fan,
       .bento-plugs,
+      .bento-computer,
       .bento-windows,
       .bento-wally,
       .bento-media,
@@ -1971,6 +1985,10 @@
       }
 
       .plug-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .bento-plugs .plug-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
